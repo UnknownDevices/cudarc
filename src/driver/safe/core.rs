@@ -607,6 +607,18 @@ impl<T> CudaSlice<T> {
     pub fn stream(&self) -> &Arc<CudaStream> {
         &self.stream
     }
+
+    /// The underlying device pointer.
+    ///
+    /// # Safety
+    /// While this function is marked as safe, actually using the
+    /// returned object is unsafe.
+    ///
+    /// **You must not free/release the device pointer**, as it is still
+    /// owned by the [CudaSlice].
+    pub fn cu_device_ptr(&self) -> sys::CUdeviceptr {
+        self.cu_device_ptr
+    }
 }
 
 impl<T: DeviceRepr> CudaSlice<T> {
